@@ -5,6 +5,7 @@ import React, { Component, Fragment} from 'react'
 import { string } from "prop-types";
 import axios from "axios";
 import Pusher from "pusher-js";
+import ChatMessage from './ChatMessage'
 
 /**
  * Chat component
@@ -42,11 +43,44 @@ class Chat extends Component {
 
     render(){
         const {activeUser} = this.props;
+        const { chats } = this.state;
         return (
             activeUser && 
             <Fragment>
                 <div className="border-bottom border-gray w-100 d-flex align-items-center bg-white" style={{ height: 90 }}>
                     <h2 className="text-dark mb-0 mx-4 px-2">{activeUser}</h2>
+                </div>
+
+                <div className="px-4 pb-4 w-100 d-flex flex-row flex-wrap align-items-start align-content-start position-relative" style={{ height: 'calc(100% - 180px)', overflowY: 'scroll' }}>
+                    {
+                        chats.map(({ user, message, timestamp, score}, index) => {
+
+                            const previous = Math.max(0, index - 1);
+                            const previousChat = this.state.chats[previous];
+                            const position = user === this.props.activeUser ? "right" : "left";
+                
+                            const isFirst = previous === index;
+                            const inSequence = user === previousChat.user;
+                            const hasDelay = Math.ceil((timestamp - previousChat.timestamp) / (1000 * 60)) > 1;
+                    
+                            const mood = score > 0 ? HAPPY_EMOJI : (score === 0 ? NEUTRAL_EMOJI : SAD_EMOJI);
+                
+                            return (
+                                <Fragment key={index}>
+                                   { 
+                                       (isFirst || !inSequence || hasDelay) && (
+                                        <div className={`d-block w-100 font-weight-bold text-dark mt-4 pb-1 px-1 text-${position}`} style={{ fontSize: '0.9rem' }}>
+                                            <span className="d-block" style={{ fontSize: '1.6rem' }}>
+                                                {String.fromCodePoint(...mood)}
+                                            </span>
+                                            <span>{user || 'Anonymous'}</span>
+                                        </div>
+                                    ) }
+                                    <ChatMessage message={message} position={position} />
+                                </Fragment>
+                            )
+                        })
+                    }
                 </div>
 
                 <div className="border-top border-gray w-100 px-4 d-flex align-items-center bg-light" style={{ minHeight: 90 }}>
