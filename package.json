@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:dev":"",
-    "start": "NODE_ENV=production node server"
+    "start:dev": "nodemon server.js",
+    "start": "NODE_ENV=production node server.js",
+    "build": "next build"
   },
   "repository": {
     "type": "git",
@@ -30,6 +31,10 @@
     "pusher-js": "^4.2.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
-    "sentiment": "^5.0.1"
+    "sentiment": "^5.0.1",
+    "winston": "^3.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.1"
   }
 }
