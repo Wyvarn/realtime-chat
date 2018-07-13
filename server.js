@@ -38,6 +38,43 @@ app.prepare().then(() => {
         return handler(request, response)
     });
 
+    // TODO: chat history, persist this to an action store, a database
+    const chatHistory = {
+        messages: []
+    }
+
+    server.post("/message", (request, response, next) => {
+        // de-structure the request object, obtaining the timestamp, user, message
+        // assigning defaults to the objects
+        // this is used with the help of the body-parser middleware
+        const {
+            user = null, message = "", timestamp = +new Date
+        } = request.body;
+
+        // analyze the message and extract the score
+        const {
+            score
+        } = sentiment.analyze(message);
+
+        // build the chat object, with the user, message, score and timestamp
+        const chat = {
+            user,
+            message,
+            score,
+            timestamp
+        }
+
+        // TODO: add the chat to the messages array to persist
+        // In the event of actually adding a persiste storage, add a persisten storage, i.e. DB to store
+        // the chat
+        chatHistory.messages.push(chat);
+
+        // trigger an event, 'new-message' on the 'chat-room' channel with the chat data
+        pusher.trigger("chat-room", "new-message", {
+            chat
+        })
+    })
+
     server.listen(port, error => {
         if (error) {
             throw error
