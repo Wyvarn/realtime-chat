@@ -3,7 +3,7 @@
  */
 
 import React, { Fragment } from 'react';
-import { node, object, element, oneOfType, array, string} from "prop-types";
+import { node, element, oneOfType, array, string} from "prop-types";
 import Head from "next/head";
 
 /**
@@ -12,21 +12,23 @@ import Head from "next/head";
  * @param {String} pageTitle Page title that will be used in the Head
  * @param {Object} children Children props passed to Layout
  */
-const Layout = (children, pageTitle) => {
-    <Fragment>
-        <Head>
-            <meta charSet="utf-8"/>
-            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossOrigin="anonymous"/>
-            <title>{pageTitle || "RealTime Chat"}</title>
-        </Head>
-        {children}
-    </Fragment>
+const Layout = ({children, pageTitle}) => {
+    return (
+        <Fragment>
+            <Head>
+                <meta charSet="utf-8"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossOrigin="anonymous"/>
+                <title>{pageTitle || "RealTime Chat"}</title>
+            </Head>
+            {children}
+        </Fragment>
+    )
 }
 
 Layout.propTypes = {
     pageTitle: string,
-    children: oneOfType([ object, element, node, array])
+    children: oneOfType([ element, node, array])
 }
 
 export default Layout;

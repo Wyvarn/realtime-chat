@@ -40,7 +40,7 @@ class IndexPage extends Component {
                                  {
                                      user ?
                                      (<span>
-                                         <span style={{ color: "#999"}}>Hello!</span>{user}
+                                         <span style={{ color: "#999"}}>Hello!</span> {user}
                                      </span>):
                                     "What is your name?"
                                  }
@@ -64,6 +64,6 @@ class IndexPage extends Component {
     }
 }
 
-export default () => {
+export default () => (
     <IndexPage/>
-}
+)
