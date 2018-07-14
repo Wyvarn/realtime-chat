@@ -34,6 +34,17 @@ app.prepare().then(() => {
         extended: true
     }));
 
+    /**
+     * Logs all requests
+     */
+    server.use(async (request, response, next) => {
+        const start = Date.now();
+        // pause the control flow until the handler is resolved
+        await next()
+        const responseTime = Date.now() - start;
+        log.info(`${request.method} ${request.statusCode} ${request.url} - ${responseTime}`)
+    })
+
     server.get("*", (request, response) => {
         return handler(request, response)
     });
@@ -73,10 +84,17 @@ app.prepare().then(() => {
         pusher.trigger("chat-room", "new-message", {
             chat
         })
+    });
+
+    server.post("/messages", (request, response, next) => {
+        response.json({ ...chatHistory,
+            status: "success"
+        })
     })
 
     server.listen(port, error => {
         if (error) {
+            log.error(`Failed to start server with error ${error}`)
             throw error
         }
         log.info(`Ready on http://localhost:${port}`)

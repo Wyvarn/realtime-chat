@@ -6,6 +6,7 @@ import { string } from "prop-types";
 import axios from "axios";
 import Pusher from "pusher-js";
 import ChatMessage from './ChatMessage'
+import {HAPPY_EMOJI, NEUTRAL_EMOJI, SAD_EMOJI} from './constants';
 
 /**
  * Chat component
@@ -16,6 +17,7 @@ class Chat extends Component {
     constructor(props){
         super(props);
         this.state = {
+            value: "",
             chats: [],
             error: {}
         }
@@ -25,15 +27,21 @@ class Chat extends Component {
      * Handles key up events. This will be used to record chat messages
      * @param {Object} e destructured Event object
      */
-    handleKeyUp = ({ target: {value}, shiftKey, keyCode }) => {
+    handleKeyUp = ({ target: { value }, shiftKey, keyCode }) => {
+        this.setState({value})
+        
         // if the keycode is an enter key and not the shift key
         if (keyCode === 13 && !shiftKey){
             // get the activeUser from the props
             const { activeUser: user } = this.props;
+        
             // create a chat object, with the user, message and timestamp
             const chat = { user, message: value, timeStamp: +new Date };
+
             // set the value back to an empty string
-            value = "";
+            this.setState({
+                value:""
+            })
             
             // create a POST /message request with the chat in the body of the request
             // post the message to the /messages route
@@ -41,9 +49,18 @@ class Chat extends Component {
         }
     }
 
+    /**
+     * Handle on change events on text area
+     */
+    handleOnChange = ({ target: { value }}) => {
+        this.setState({
+            value
+        })
+    }
+
     render(){
         const {activeUser} = this.props;
-        const { chats } = this.state;
+        const { chats, value } = this.state;
         return (
             activeUser && 
             <Fragment>
@@ -85,9 +102,12 @@ class Chat extends Component {
 
                 <div className="border-top border-gray w-100 px-4 d-flex align-items-center bg-light" style={{ minHeight: 90 }}>
                     <textarea 
+                        name="textarea"
                         className="form-control px-3 py-2" 
                         onKeyUp={this.handleKeyUp} 
                         placeholder="Enter a chat message" 
+                        value={value}
+                        onChange={this.handleOnChange}
                         style={{ resize: 'none' }}/>
                 </div>
             </Fragment>
