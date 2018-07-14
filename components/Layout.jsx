@@ -2,7 +2,7 @@
  * Base Layout for all pages in the application
  */
 
-import React, { Fragment } from 'react';
+import React, { Fragment, StrictMode } from 'react';
 import { node, element, oneOfType, array, string} from "prop-types";
 import Head from "next/head";
 
@@ -21,7 +21,9 @@ const Layout = ({children, pageTitle}) => {
                 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossOrigin="anonymous"/>
                 <title>{pageTitle || "RealTime Chat"}</title>
             </Head>
-            {children}
+            <StrictMode>
+                {children}
+            </StrictMode>
         </Fragment>
     )
 }
