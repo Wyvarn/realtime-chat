@@ -11,7 +11,9 @@
     "build": "next build",
     "deploy": "now",
     "deploy:docker": "now --docker",
-    "deploy:npm": "now --npm"
+    "deploy:npm": "now --npm",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -37,9 +39,11 @@
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "sentiment": "^5.0.1",
-    "winston": "^3.0.0"
+    "winston": "^3.0.0",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "now": "^11.2.9"
-  }
+  },
+  "snyk": true
 }
