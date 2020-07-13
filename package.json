@@ -35,7 +35,7 @@
     "pusher": "^2.0.1",
     "pusher-js": "^4.2.2",
     "react": "^16.4.1",
-    "react-dom": "^16.4.1",
+    "react-dom": "^16.4.2",
     "sentiment": "^5.0.1",
     "winston": "^3.0.0"
   },
