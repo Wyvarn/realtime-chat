@@ -33,7 +33,7 @@
     "next": "^9.4.4",
     "prop-types": "^15.6.2",
     "pusher": "^2.2.2",
-    "pusher-js": "^4.2.2",
+    "pusher-js": "^4.4.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.2",
     "sentiment": "^5.0.1",
