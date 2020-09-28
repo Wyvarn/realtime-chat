@@ -40,6 +40,6 @@
     "winston": "^3.0.0"
   },
   "devDependencies": {
-    "now": "^20.1.0"
+    "now": "^20.1.1"
   }
 }
