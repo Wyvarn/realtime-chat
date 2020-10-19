@@ -34,8 +34,8 @@
     "next": "^9.5.4",
     "pusher": "^2.2.2",
     "pusher-js": "^4.4.0",
-    "react": "^16.5.0",
-    "react-dom": "^16.5.0",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
     "sentiment": "^5.0.2",
     "winston": "^3.0.0"
   },
